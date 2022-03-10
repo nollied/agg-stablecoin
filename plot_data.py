@@ -13,7 +13,7 @@ def plot_currency(ticker):
     plt.show()
 
 
-def plot_averages(cryptos=CRYPTOS, normalize=False):
+def plot_averages(cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
     # TODO: docstring
 
     dfs = [pd.read_csv(get_path(ticker)) for ticker in cryptos]
@@ -35,16 +35,24 @@ def plot_averages(cryptos=CRYPTOS, normalize=False):
         X.append(day)
         Y.append(sum(values) / len(values))
 
-    print(X)
-
-    plt.plot(range(len(X)), Y)
+    # calculate Y's 30 day moving average
+    if moving_avg_window > 1:
+        Y_avg = []
+        for i in range(len(Y)):
+            if i >= moving_avg_window:
+                Y_avg.append(np.mean(Y[i - moving_avg_window:i]))
+        plt.plot(range(len(Y_avg)), Y_avg)
+    else:
+        plt.plot(range(len(X)), Y)
+    
     plt.show()
 
 
 
 if __name__ == "__main__":
     plot_averages(['BTC'])
-    plot_averages()
+    plot_averages(moving_avg_window=1, normalize=True)
+    plot_averages(moving_avg_window=30, normalize=True)
     # for ticker in CRYPTOS:
     #     plot_currency(ticker)
     #     break
