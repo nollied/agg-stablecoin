@@ -7,7 +7,8 @@ START_DATE = "2018-12-01"
 END_DATE ="2022-3-9"
 
 DATA_DIRECTORY = f'data/{BASE}_{START_DATE}_{END_DATE}'
-CRYPTOS = ['BTC', 'ETH', 'BNB', 'XRP', 'LUNA', 'ADA', 'SOL', 'AVAX', 'DOT', 'DOGE', 'SHIB', 'MATIC', 'DAI', 'USDC']
+# CRYPTOS = ['BTC', 'ETH', 'BNB', 'XRP', 'LUNA', 'ADA', 'SOL', 'AVAX', 'DOT', 'DOGE', 'SHIB', 'MATIC', 'DAI', 'USDC']  # with stables
+CRYPTOS = ['BTC', 'ETH', 'BNB', 'XRP', 'LUNA', 'ADA', 'SOL', 'AVAX', 'DOT', 'DOGE', 'SHIB', 'MATIC']
 
 
 def get_path(ticker):

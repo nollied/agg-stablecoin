@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from get_data import DATA_DIRECTORY, CRYPTOS, get_path
@@ -12,11 +13,8 @@ def plot_currency(ticker):
     plt.show()
 
 
-def plot_averages(cryptos=CRYPTOS, num_days=1):
+def plot_averages(cryptos=CRYPTOS, normalize=False):
     # TODO: docstring
-
-    if num_days <= 0:
-        raise ValueError("num_days must be greater than 0")
 
     dfs = [pd.read_csv(get_path(ticker)) for ticker in cryptos]
     day_values = defaultdict(list)
@@ -24,22 +22,20 @@ def plot_averages(cryptos=CRYPTOS, num_days=1):
     for df in dfs:
         dts = df['dt']
         highs = df['high']
-        last_day = dts[0]
-        day_cycle = 0
+
+        if normalize:
+            highs /= np.linalg.norm(highs)
 
         for dt, high in zip(dts, highs):
-            day_values[last_day].append(high)
-
-            # each value is averaged over the previous `num_days`
-            day_cycle = (day_cycle + 1) % num_days
-            if day_cycle == 0:
-                last_day = dt
+            day_values[dt].append(high)
 
     X = []
     Y = []
     for day, values in day_values.items():
         X.append(day)
-        Y.append(reduce(lambda x, y: x + y, values) / len(values))
+        Y.append(sum(values) / len(values))
+
+    print(X)
 
     plt.plot(range(len(X)), Y)
     plt.show()
@@ -47,6 +43,7 @@ def plot_averages(cryptos=CRYPTOS, num_days=1):
 
 
 if __name__ == "__main__":
+    plot_averages(['BTC'])
     plot_averages()
     # for ticker in CRYPTOS:
     #     plot_currency(ticker)
