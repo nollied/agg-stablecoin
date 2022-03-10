@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from get_data import DATA_DIRECTORY, CRYPTOS, get_path
+from get_data import DATA_DIRECTORY, CRYPTOS, START_DATE, END_DATE, get_path
 from functools import reduce
 from collections import defaultdict
 
@@ -13,7 +13,7 @@ def plot_currency(ticker):
     plt.show()
 
 
-def plot_averages(cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
+def plot_averages(title, cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
     # TODO: docstring
 
     dfs = [pd.read_csv(get_path(ticker)) for ticker in cryptos]
@@ -45,14 +45,16 @@ def plot_averages(cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
     else:
         plt.plot(range(len(X)), Y)
     
+    plt.xlabel(f'Days between {START_DATE} and {END_DATE}')
+    plt.ylabel('Price (USD)')
+    plt.title(title)
+
     plt.show()
 
 
 
 if __name__ == "__main__":
-    plot_averages(['BTC'])
-    plot_averages(moving_avg_window=1, normalize=True)
-    plot_averages(moving_avg_window=30, normalize=True)
-    # for ticker in CRYPTOS:
-    #     plot_currency(ticker)
-    #     break
+    plot_averages('$BTC', ['BTC'])
+    plot_averages('$AGG', moving_avg_window=1, normalize=True)
+    plot_averages('$AGG (using 30 day moving average)', moving_avg_window=30, normalize=True)
+
