@@ -7,15 +7,19 @@ START_DATE = "2018-12-01"
 END_DATE ="2022-3-9"
 
 DATA_DIRECTORY = f'data/{BASE}_{START_DATE}_{END_DATE}'
-CRYPTOS = ['BTC', 'ETH', 'XRP', 'BCH', 'LTC']
+CRYPTOS = ['BTC', 'ETH', 'BNB', 'XRP', 'LUNA', 'ADA', 'SOL', 'AVAX', 'DOT', 'DOGE', 'SHIB', 'MATIC', 'DAI', 'USDC']
 
 
-def download_csvs(directory, crypto_tickers):
-    os.makedirs(directory, exist_ok=True)
+def get_path(ticker):
+    fn = f'{ticker}.csv'
+    return os.path.join(DATA_DIRECTORY, fn)
+
+
+def download_csvs(crypto_tickers):
+    os.makedirs(DATA_DIRECTORY, exist_ok=True)
 
     for ticker in crypto_tickers:
-        fn = f'{ticker}.csv'
-        path = os.path.join(directory, fn)
+        path = get_path(ticker)
 
         if os.path.exists(path):
             continue
@@ -25,4 +29,4 @@ def download_csvs(directory, crypto_tickers):
 
 
 if __name__ == "__main__":
-    download_csvs(DATA_DIRECTORY, CRYPTOS)
+    download_csvs(CRYPTOS)
