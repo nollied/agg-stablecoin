@@ -56,5 +56,5 @@ def plot_averages(title, cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
 if __name__ == "__main__":
     plot_averages('$BTC', ['BTC'])
     plot_averages('$AGG', moving_avg_window=1, normalize=True)
-    plot_averages('$AGG (using a 1-year moving average)', moving_avg_window=365, normalize=True)
+    plot_averages('$AGG (normalized + 1-year moving average)', moving_avg_window=365, normalize=True)
 
