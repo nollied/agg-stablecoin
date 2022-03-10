@@ -35,7 +35,7 @@ def plot_averages(title, cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
         X.append(day)
         Y.append(sum(values) / len(values))
 
-    # calculate Y's 30 day moving average
+    # calculate Y's moving average
     if moving_avg_window > 1:
         Y_avg = []
         for i in range(len(Y)):
@@ -56,5 +56,5 @@ def plot_averages(title, cryptos=CRYPTOS, normalize=False, moving_avg_window=1):
 if __name__ == "__main__":
     plot_averages('$BTC', ['BTC'])
     plot_averages('$AGG', moving_avg_window=1, normalize=True)
-    plot_averages('$AGG (using 30 day moving average)', moving_avg_window=30, normalize=True)
+    plot_averages('$AGG (using a 1-year moving average)', moving_avg_window=365, normalize=True)
 
